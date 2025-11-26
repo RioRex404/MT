@@ -77,72 +77,81 @@ const datosMuestra = [
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Inicializando dashboard...');
     
-    // Crear gráficos principales
-    crearGraficosPrincipales();
-    
-    // Generar modelos
-    generarModelos();
-    
-    // Generar tabla de datos
-    generarTablaDatos();
-    
-    // Crear gráficos de influencia
-    crearGraficosInfluencia();
-    
-    // Animar barras de progreso
-    setTimeout(animarBarrasProgreso, 1000);
-    
-    console.log('✅ Dashboard inicializado correctamente');
+    try {
+        // Crear gráficos principales
+        crearGraficosPrincipales();
+        
+        // Generar modelos
+        generarModelos();
+        
+        // Generar tabla de datos
+        generarTablaDatos();
+        
+        // Crear gráficos de influencia
+        crearGraficosInfluencia();
+        
+        // Animar barras de progreso
+        setTimeout(animarBarrasProgreso, 1000);
+        
+        console.log('✅ Dashboard inicializado correctamente');
+    } catch (error) {
+        console.error('❌ Error al inicializar dashboard:', error);
+    }
 });
 
 // ========== GRÁFICOS PRINCIPALES ==========
 function crearGraficosPrincipales() {
-    console.log('📊 Creando gráficos principales...');
-    
-    // Gráfico circular - R²
-    Plotly.newPlot('pieChart', [{
-        values: r2Values,
-        labels: variables,
-        type: 'pie',
-        hole: 0.4,
-        marker: {
-            colors: ['#27ae60', '#f39c12', '#e74c3c', '#3498db']
-        },
-        textinfo: 'label+percent',
-        hovertemplate: '<b>%{label}</b><br>R²: %{value}%<extra></extra>'
-    }], {
-        height: 380,
-        showlegend: false,
-        margin: { t: 50, b: 50, l: 50, r: 50 }
-    });
+    try {
+        // Gráfico circular - R²
+        Plotly.newPlot('pieChart', [{
+            values: r2Values,
+            labels: variables,
+            type: 'pie',
+            hole: 0.4,
+            marker: {
+                colors: ['#27ae60', '#f39c12', '#e74c3c', '#3498db']
+            },
+            textinfo: 'label+percent',
+            hovertemplate: '<b>%{label}</b><br>R²: %{value}%<extra></extra>'
+        }], {
+            height: 380,
+            showlegend: false,
+            margin: { t: 50, b: 50, l: 50, r: 50 }
+        });
 
-    // Gráfico de barras - Correlación
-    Plotly.newPlot('barChart', [{
-        y: variables,
-        x: corrValues,
-        type: 'bar',
-        orientation: 'h',
-        marker: {
-            color: ['#27ae60', '#f39c12', '#e74c3c', '#3498db']
-        },
-        hovertemplate: '<b>%{y}</b><br>Correlación: %{x:.3f}<extra></extra>'
-    }], {
-        height: 380,
-        xaxis: {
-            title: 'Coeficiente de Correlación (r)',
-            range: [0, 1]
-        },
-        margin: { t: 50, b: 50, l: 120, r: 50 }
-    });
+        // Gráfico de barras - Correlación
+        Plotly.newPlot('barChart', [{
+            y: variables,
+            x: corrValues,
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: ['#27ae60', '#f39c12', '#e74c3c', '#3498db']
+            },
+            hovertemplate: '<b>%{y}</b><br>Correlación: %{x:.3f}<extra></extra>'
+        }], {
+            height: 380,
+            xaxis: {
+                title: 'Coeficiente de Correlación (r)',
+                range: [0, 1]
+            },
+            margin: { t: 50, b: 50, l: 120, r: 50 }
+        });
+    } catch (error) {
+        console.error('❌ Error en gráficos principales:', error);
+    }
 }
 
 // ========== GRÁFICOS DE INFLUENCIA ==========
 function crearGraficosInfluencia() {
-    console.log('📈 Creando gráficos de influencia...');
-    crearGraficoBarrasInfluencia();
-    crearGraficoPastelInfluencia();
-    crearHistogramaInfluencia();
-    crearPoligonoFrecuenciasInfluencia();
+    try {
+        crearGraficoBarrasInfluencia();
+        crearGraficoPastelInfluencia();
+        crearHistogramaInfluencia();
+        crearPoligonoFrecuenciasInfluencia();
+    } catch (error) {
+        console.error('❌ Error en gráficos de influencia:', error);
+    }
 }
 
 // 1. GRÁFICO DE BARRAS - INFLUENCIA
@@ -304,206 +313,198 @@ function crearPoligonoFrecuenciasInfluencia() {
 
 // ========== MODELOS MATEMÁTICOS ==========
 function generarModelos() {
-    const container = document.getElementById('modelos-container');
-    
-    modelos.forEach(modelo => {
-        const modeloHTML = `
-            <div class="modelo-container">
-                <div class="modelo-header">
-                    <div class="modelo-title">${modelo.titulo}</div>
-                    <div class="modelo-stats">
-                        <div class="stat-item r2">R² = ${modelo.r2}</div>
-                        <div class="stat-item corr">r = ${modelo.correlacion}</div>
-                        <div class="stat-item error">Error = ${modelo.error}</div>
-                    </div>
-                </div>
-                <div class="modelo-equation">
-                    <strong>ECUACIÓN DEL MODELO:</strong> ${modelo.ecuacion}
-                </div>
-                <div class="interpretacion">
-                    <strong>INTERPRETACIÓN:</strong> ${modelo.interpretacion}
-                </div>
-                <div id="modelo${modelo.id}Chart" class="chart-container" style="height: 400px;"></div>
-            </div>
-        `;
+    try {
+        const container = document.getElementById('modelos-container');
+        if (!container) {
+            console.error('❌ No se encontró el contenedor de modelos');
+            return;
+        }
         
-        container.innerHTML += modeloHTML;
-        crearGraficoModelo(modelo);
-    });
+        modelos.forEach(modelo => {
+            const modeloHTML = `
+                <div class="modelo-container">
+                    <div class="modelo-header">
+                        <div class="modelo-title">${modelo.titulo}</div>
+                        <div class="modelo-stats">
+                            <div class="stat-item r2">R² = ${modelo.r2}</div>
+                            <div class="stat-item corr">r = ${modelo.correlacion}</div>
+                            <div class="stat-item error">Error = ${modelo.error}</div>
+                        </div>
+                    </div>
+                    <div class="modelo-equation">
+                        <strong>ECUACIÓN DEL MODELO:</strong> ${modelo.ecuacion}
+                    </div>
+                    <div class="interpretacion">
+                        <strong>INTERPRETACIÓN:</strong> ${modelo.interpretacion}
+                    </div>
+                    <div id="modelo${modelo.id}Chart" class="chart-container" style="height: 400px;"></div>
+                </div>
+            `;
+            
+            container.innerHTML += modeloHTML;
+            crearGraficoModelo(modelo);
+        });
+    } catch (error) {
+        console.error('❌ Error generando modelos:', error);
+    }
 }
 
 function crearGraficoModelo(modelo) {
-    const x = [];
-    const y = [];
-    const n = 50;
-    
-    for (let i = 0; i < n; i++) {
-        let xVal;
-        switch(modelo.id) {
-            case 1: // Temp Min
-                xVal = 12 + Math.random() * 4.5;
-                break;
-            case 2: // Precipitación
-                xVal = 5 + Math.random() * 90;
-                break;
-            case 3: // Humedad
-                xVal = 71 + Math.random() * 6.5;
-                break;
-            case 4: // Temp Max
-                xVal = 22.5 + Math.random() * 5;
-                break;
+    try {
+        const x = [];
+        const y = [];
+        const n = 50;
+        
+        for (let i = 0; i < n; i++) {
+            let xVal;
+            switch(modelo.id) {
+                case 1: // Temp Min
+                    xVal = 12 + Math.random() * 4.5;
+                    break;
+                case 2: // Precipitación
+                    xVal = 5 + Math.random() * 90;
+                    break;
+                case 3: // Humedad
+                    xVal = 71 + Math.random() * 6.5;
+                    break;
+                case 4: // Temp Max
+                    xVal = 22.5 + Math.random() * 5;
+                    break;
+                default:
+                    xVal = 10 + Math.random() * 10;
+            }
+            
+            const error = (Math.random() - 0.5) * 150;
+            const ecuacionParts = modelo.ecuacion.split(' ');
+            const pendiente = parseFloat(ecuacionParts[2]);
+            const intercepto = parseFloat(ecuacionParts[4]);
+            const yVal = pendiente * xVal + intercepto + error;
+            
+            x.push(parseFloat(xVal.toFixed(1)));
+            y.push(Math.max(100, Math.min(650, Math.round(yVal))));
         }
+
+        const trace1 = {
+            x: x,
+            y: y,
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Datos observados',
+            marker: {
+                color: modelo.color,
+                size: 8,
+                opacity: 0.6
+            }
+        };
+
+        const xMin = Math.min(...x);
+        const xMax = Math.max(...x);
+        const ecuacionParts = modelo.ecuacion.split(' ');
+        const pendiente = parseFloat(ecuacionParts[2]);
+        const intercepto = parseFloat(ecuacionParts[4]);
         
-        const error = (Math.random() - 0.5) * 150;
-        const pendiente = parseFloat(modelo.ecuacion.split(' ')[2]);
-        const intercepto = parseFloat(modelo.ecuacion.split(' ')[4]);
-        const yVal = pendiente * xVal + intercepto + error;
+        const xLine = [xMin, xMax];
+        const yLine = [pendiente * xMin + intercepto, pendiente * xMax + intercepto];
         
-        x.push(parseFloat(xVal.toFixed(1)));
-        y.push(Math.max(100, Math.min(650, Math.round(yVal))));
+        const trace2 = {
+            x: xLine,
+            y: yLine,
+            mode: 'lines',
+            name: 'Línea de regresión',
+            line: {
+                color: '#e74c3c',
+                width: 4
+            }
+        };
+
+        Plotly.newPlot(`modelo${modelo.id}Chart`, [trace1, trace2], {
+            title: modelo.titulo,
+            xaxis: { title: modelo.variable },
+            yaxis: { title: 'Casos de IRA' },
+            height: 350,
+            showlegend: true,
+            legend: { x: 0, y: 1 }
+        });
+    } catch (error) {
+        console.error(`❌ Error creando gráfico del modelo ${modelo.id}:`, error);
     }
-
-    const trace1 = {
-        x: x,
-        y: y,
-        mode: 'markers',
-        type: 'scatter',
-        name: 'Datos observados',
-        marker: {
-            color: modelo.color,
-            size: 8,
-            opacity: 0.6
-        }
-    };
-
-    const xMin = Math.min(...x);
-    const xMax = Math.max(...x);
-    const pendiente = parseFloat(modelo.ecuacion.split(' ')[2]);
-    const intercepto = parseFloat(modelo.ecuacion.split(' ')[4]);
-    
-    const xLine = [xMin, xMax];
-    const yLine = [pendiente * xMin + intercepto, pendiente * xMax + intercepto];
-    
-    const trace2 = {
-        x: xLine,
-        y: yLine,
-        mode: 'lines',
-        name: 'Línea de regresión',
-        line: {
-            color: '#e74c3c',
-            width: 4
-        }
-    };
-
-    Plotly.newPlot(`modelo${modelo.id}Chart`, [trace1, trace2], {
-        title: modelo.titulo,
-        xaxis: { title: modelo.variable },
-        yaxis: { title: 'Casos de IRA' },
-        height: 350,
-        showlegend: true,
-        legend: { x: 0, y: 1 }
-    });
 }
 
 // ========== TABLA DE DATOS ==========
 function generarTablaDatos() {
-    const tabla = document.getElementById('tabla-datos');
-    
-    let html = `
-        <thead>
-            <tr>
-                <th>Año</th>
-                <th>Mes</th>
-                <th>Casos IRA</th>
-                <th>Temp. Min (°C)</th>
-                <th>Precip. (mm)</th>
-                <th>Humedad (%)</th>
-                <th>Temp. Max (°C)</th>
-            </tr>
-        </thead>
-        <tbody>
-    `;
-    
-    datosMuestra.forEach(dato => {
-        html += `
-            <tr>
-                <td>${dato.año}</td>
-                <td>${dato.mes}</td>
-                <td>${dato.casos}</td>
-                <td>${dato.tempMin}</td>
-                <td>${dato.precip}</td>
-                <td>${dato.humedad}</td>
-                <td>${dato.tempMax}</td>
-            </tr>
+    try {
+        const tabla = document.getElementById('tabla-datos');
+        if (!tabla) {
+            console.error('❌ No se encontró la tabla de datos');
+            return;
+        }
+        
+        let html = `
+            <thead>
+                <tr>
+                    <th>Año</th>
+                    <th>Mes</th>
+                    <th>Casos IRA</th>
+                    <th>Temp. Min (°C)</th>
+                    <th>Precip. (mm)</th>
+                    <th>Humedad (%)</th>
+                    <th>Temp. Max (°C)</th>
+                </tr>
+            </thead>
+            <tbody>
         `;
-    });
-    
-    html += `
-            <tr>
-                <td colspan="7" style="background: #f8f9fa; color: #7f8c8d; text-align: center;">
-                    ... y 66 filas adicionales (72 meses en total) ...
-                </td>
-            </tr>
-        </tbody>
-    `;
-    
-    tabla.innerHTML = html;
+        
+        datosMuestra.forEach(dato => {
+            html += `
+                <tr>
+                    <td>${dato.año}</td>
+                    <td>${dato.mes}</td>
+                    <td>${dato.casos}</td>
+                    <td>${dato.tempMin}</td>
+                    <td>${dato.precip}</td>
+                    <td>${dato.humedad}</td>
+                    <td>${dato.tempMax}</td>
+                </tr>
+            `;
+        });
+        
+        html += `
+                <tr>
+                    <td colspan="7" style="background: #f8f9fa; color: #7f8c8d; text-align: center;">
+                        ... y 66 filas adicionales (72 meses en total) ...
+                    </td>
+                </tr>
+            </tbody>
+        `;
+        
+        tabla.innerHTML = html;
+    } catch (error) {
+        console.error('❌ Error generando tabla de datos:', error);
+    }
 }
 
 // ========== ANIMACIÓN DE BARRAS DE PROGRESO ==========
 function animarBarrasProgreso() {
-    const barras = document.querySelectorAll('.barra-progreso-fill');
-    barras.forEach(barra => {
-        const width = barra.style.width;
-        barra.style.width = '0%';
-        setTimeout(() => {
-            barra.style.width = width;
-            barra.style.transition = 'width 1.5s ease-in-out';
-        }, 100);
-    });
+    try {
+        const barras = document.querySelectorAll('.barra-progreso-fill');
+        barras.forEach(barra => {
+            const width = barra.style.width;
+            barra.style.width = '0%';
+            setTimeout(() => {
+                barra.style.width = width;
+                barra.style.transition = 'width 1.5s ease-in-out';
+            }, 100);
+        });
+    } catch (error) {
+        console.error('❌ Error animando barras de progreso:', error);
+    }
 }
 
-// ========== FUNCIONES DE UTILIDAD ==========
-function descargarDatos() {
-    console.log('📥 Descargando datos...');
-    // Aquí puedes agregar funcionalidad para descargar datos
-    alert('Función de descarga habilitada - Los datos estarán disponibles pronto');
-}
-
-function exportarReporte() {
-    console.log('📄 Exportando reporte...');
-    // Aquí puedes agregar funcionalidad para exportar reportes
-    alert('Función de exportación habilitada - El reporte estará disponible pronto');
-}
-
-// ========== EVENT LISTENERS ADICIONALES ==========
-window.addEventListener('resize', function() {
-    // Re-dibujar gráficos en redimensionamiento para mantener responsividad
-    Plotly.Plots.resize('pieChart');
-    Plotly.Plots.resize('barChart');
-    Plotly.Plots.resize('barChartInfluencia');
-    Plotly.Plots.resize('pieChartInfluencia');
-    Plotly.Plots.resize('histogramaInfluencia');
-    Plotly.Plots.resize('poligonoInfluencia');
-});
-
-// Manejo de errores global
+// ========== MANEJO DE ERRORES GLOBAL ==========
 window.addEventListener('error', function(e) {
-    console.error('❌ Error en el dashboard:', e.error);
+    console.error('❌ Error global en el dashboard:', e.error);
 });
 
-// Función para recargar gráficos si es necesario
-function recargarGraficos() {
-    console.log('🔄 Recargando gráficos...');
-    crearGraficosPrincipales();
-    crearGraficosInfluencia();
-}
-
-// Exportar funciones para uso global (si es necesario)
-window.dashboard = {
-    recargarGraficos,
-    descargarDatos,
-    exportarReporte,
-    modelos,
-    datosInfluencia
-};
+window.addEventListener('unhandledrejection', function(e) {
+    console.error('❌ Promise rechazada no manejada:', e.reason);
+});

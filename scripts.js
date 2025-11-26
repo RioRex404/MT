@@ -261,4 +261,16 @@ function generarTablaDatos() {
     `;
     
     tabla.innerHTML = html;
+
 }
+<!-- VERSIÓN CON BARRAS DE PROGRESO -->
+<th>Influencia Visual</th>
+
+<!-- Y en el tbody: -->
+<td>
+    <div class="barra-progreso alto" style="width: 100%;">
+        <div class="barra-progreso-fill" style="width: 65.91%;">
+            <span class="barra-progreso-texto">65.91%</span>
+        </div>
+    </div>
+</td>

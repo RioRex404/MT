@@ -132,12 +132,18 @@ body {
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    height: 450px;
+    height: 500px;
+    transition: transform 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .chart-title {
     color: var(--primary);
-    font-size: 1.4em;
+    font-size: 1.3em;
     font-weight: 600;
     margin-bottom: 20px;
     text-align: center;
@@ -335,82 +341,6 @@ body {
     font-size: 0.9em;
 }
 
-@media (max-width: 768px) {
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .chart-container {
-        height: 400px;
-    }
-    
-    .metrics-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .header h1 {
-        font-size: 2em;
-    }
-}
-
-.badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8em;
-    font-weight: 600;
-    margin-left: 10px;
-}
-
-.badge.success { background: var(--success); color: white; }
-.badge.warning { background: var(--warning); color: white; }
-.badge.danger { background: var(--danger); color: white; }
-
-.badge.info { background: var(--accent); color: white; }
-/* Estilos para la tabla de porcentajes */
-.variables-table tr[style*="background: #e8f5e8"] {
-    border: 2px solid var(--success);
-}
-
-.variables-table tr[style*="background: #e8f5e8"] td {
-    font-weight: 700;
-    color: var(--success);
-}
-
-.impacto-alto { color: var(--success); font-weight: 600; }
-.impacto-medio { color: var(--warning); font-weight: 600; }
-.impacto-bajo { color: var(--danger); font-weight: 600; }
-
-/* Barras de progreso para visualizar porcentajes */
-.barra-progreso {
-    background: #ecf0f1;
-    border-radius: 10px;
-    height: 20px;
-    margin: 5px 0;
-    overflow: hidden;
-    position: relative;
-}
-
-.barra-progreso-fill {
-    height: 100%;
-    border-radius: 10px;
-    transition: width 0.5s ease;
-}
-
-.barra-progreso.alto .barra-progreso-fill { background: var(--success); }
-.barra-progreso.medio .barra-progreso-fill { background: var(--warning); }
-.barra-progreso.bajo .barra-progreso-fill { background: var(--danger); }
-
-.barra-progreso-texto {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: white;
-    font-size: 0.8em;
-    font-weight: 600;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-}
 /* Estilos para barras de progreso */
 .barra-progreso {
     background: #ecf0f1;
@@ -459,43 +389,30 @@ body {
     transform: scale(1.02);
 }
 
-/* Mejoras para la sección de gráficos múltiples */
-.charts-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    margin-bottom: 30px;
+/* Estilo especial para la variable objetivo */
+.variables-table tr:last-child {
+    border: 2px solid #27ae60 !important;
 }
 
-@media (max-width: 1200px) {
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
+.variables-table tr:last-child td {
+    font-weight: 700;
+    color: #1e7e34;
+    background: linear-gradient(135deg, #e8f5e8, #d4edda);
 }
 
-.chart-container {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    height: 500px;
-    transition: transform 0.3s ease;
-}
-
-.chart-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
-.chart-title {
-    color: var(--primary);
-    font-size: 1.3em;
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
     font-weight: 600;
-    margin-bottom: 20px;
-    text-align: center;
-    border-bottom: 2px solid var(--light);
-    padding-bottom: 10px;
+    margin-left: 10px;
 }
+
+.badge.success { background: var(--success); color: white; }
+.badge.warning { background: var(--warning); color: white; }
+.badge.danger { background: var(--danger); color: white; }
+.badge.info { background: var(--accent); color: white; }
 
 /* Animaciones para los gráficos */
 .plot-container {
@@ -510,5 +427,42 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 1200px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        height: 400px;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header h1 {
+        font-size: 2em;
+    }
+    
+    .modelo-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .modelo-stats {
+        justify-content: flex-start;
     }
 }

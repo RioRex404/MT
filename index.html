@@ -127,7 +127,100 @@
                 </tbody>
             </table>
         </div>
-
+<!-- TABLA DE PORCENTAJES E INFLUENCIA -->
+<div class="glass-card">
+    <h2 class="section-title">📈 INFLUENCIA RELATIVA DE LAS VARIABLES</h2>
+    <table class="variables-table">
+        <thead>
+            <tr>
+                <th>Variable</th>
+                <th>Descripción</th>
+                <th>Coeficiente R²</th>
+                <th>Porcentaje de Influencia</th>
+                <th>Nivel de Impacto</th>
+                <th>Relación con Y (Casos IRA)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>X₃</strong></td>
+                <td>Humedad relativa promedio (%)</td>
+                <td>0.6591</td>
+                <td>65.91%</td>
+                <td><span class="badge success">ALTO</span></td>
+                <td>Positiva fuerte</td>
+            </tr>
+            <tr>
+                <td><strong>X₂</strong></td>
+                <td>Precipitación mensual acumulada (mm)</td>
+                <td>0.1889</td>
+                <td>18.89%</td>
+                <td><span class="badge warning">MEDIO</span></td>
+                <td>Negativa moderada</td>
+            </tr>
+            <tr>
+                <td><strong>X₄</strong></td>
+                <td>Temperatura máxima mensual (°C)</td>
+                <td>0.1533</td>
+                <td>15.33%</td>
+                <td><span class="badge warning">MEDIO</span></td>
+                <td>Negativa moderada</td>
+            </tr>
+            <tr>
+                <td><strong>X₁</strong></td>
+                <td>Temperatura mínima mensual (°C)</td>
+                <td>0.1205</td>
+                <td>12.05%</td>
+                <td><span class="badge danger">BAJO</span></td>
+                <td>Negativa débil</td>
+            </tr>
+            <tr>
+                <td><strong>Z₁</strong></td>
+                <td>Casos de neumonía confirmados</td>
+                <td>-</td>
+                <td>Por analizar</td>
+                <td><span class="badge info">POR ESTUDIAR</span></td>
+                <td>Correlación pendiente</td>
+            </tr>
+            <tr>
+                <td><strong>Z₂</strong></td>
+                <td>Tasas de hospitalización por respiratorias</td>
+                <td>-</td>
+                <td>Por analizar</td>
+                <td><span class="badge info">POR ESTUDIAR</span></td>
+                <td>Correlación pendiente</td>
+            </tr>
+            <tr>
+                <td><strong>Z₃</strong></td>
+                <td>Altitud sobre el nivel del mar (msnm)</td>
+                <td>-</td>
+                <td>Por analizar</td>
+                <td><span class="badge info">POR ESTUDIAR</span></td>
+                <td>Correlación pendiente</td>
+            </tr>
+            <tr>
+                <td><strong>Z₄</strong></td>
+                <td>Índice de vulnerabilidad climática</td>
+                <td>-</td>
+                <td>Por analizar</td>
+                <td><span class="badge info">POR ESTUDIAR</span></td>
+                <td>Correlación pendiente</td>
+            </tr>
+            <tr style="background: #e8f5e8;">
+                <td><strong>Y</strong></td>
+                <td>Casos reportados de IRA (Variable dependiente)</td>
+                <td>-</td>
+                <td>100%</td>
+                <td><span class="badge success">VARIABLE OBJETIVO</span></td>
+                <td>Variable a predecir</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="interpretacion" style="margin-top: 20px;">
+        <strong>🔍 ANÁLISIS DE INFLUENCIA:</strong> La tabla muestra que la <strong>humedad relativa</strong> es la variable con mayor poder predictivo (65.91%), seguida por la precipitación (18.89%) y las temperaturas máxima (15.33%) y mínima (12.05%). Las variables Z₁ a Z₄ representan factores adicionales que podrían incorporarse en futuros modelos multivariados para mejorar la capacidad predictiva global.
+    </div>
+</div>
         <!-- MODELOS MATEMÁTICOS -->
         <div class="glass-card">
             <h2 class="section-title">🧮 MODELOS DE REGRESIÓN LINEAL</h2>
@@ -154,4 +247,5 @@
 
     <script src="scripts.js"></script>
 </body>
+
 </html>

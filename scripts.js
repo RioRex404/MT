@@ -249,6 +249,23 @@ function generarTablaDatos() {
             </tr>
         `;
     });
+    // Función para animar las barras de progreso al cargar la página
+function animarBarrasProgreso() {
+    const barras = document.querySelectorAll('.barra-progreso-fill');
+    barras.forEach(barra => {
+        const width = barra.style.width;
+        barra.style.width = '0%';
+        setTimeout(() => {
+            barra.style.width = width;
+        }, 300);
+    });
+}
+
+// Llamar la función cuando se cargue la página
+document.addEventListener('DOMContentLoaded', function() {
+    // ... tus otras funciones ...
+    setTimeout(animarBarrasProgreso, 1000);
+});
     
     // Fila informativa
     html += `
@@ -263,4 +280,5 @@ function generarTablaDatos() {
     tabla.innerHTML = html;
 
 }
+
 

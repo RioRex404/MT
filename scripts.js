@@ -249,36 +249,188 @@ function generarTablaDatos() {
             </tr>
         `;
     });
-    // Función para animar las barras de progreso al cargar la página
-function animarBarrasProgreso() {
-    const barras = document.querySelectorAll('.barra-progreso-fill');
-    barras.forEach(barra => {
-        const width = barra.style.width;
-        barra.style.width = '0%';
-        setTimeout(() => {
-            barra.style.width = width;
-        }, 300);
-    });
+// Datos completos de influencia para todos los gráficos
+const datosInfluencia = [
+    { variable: 'Humedad Relativa', porcentaje: 65.91, categoria: 'Alta', color: '#27ae60' },
+    { variable: 'Casos Neumonía', porcentaje: 58.20, categoria: 'Alta', color: '#2ecc71' },
+    { variable: 'Hospitalizaciones', porcentaje: 52.75, categoria: 'Alta', color: '#3498db' },
+    { variable: 'Vulnerabilidad Climática', porcentaje: 28.60, categoria: 'Media', color: '#f39c12' },
+    { variable: 'Altitud', porcentaje: 22.40, categoria: 'Media', color: '#e67e22' },
+    { variable: 'Precipitación', porcentaje: 18.89, categoria: 'Media', color: '#d35400' },
+    { variable: 'Temp. Máxima', porcentaje: 15.33, categoria: 'Baja', color: '#e74c3c' },
+    { variable: 'Temp. Mínima', porcentaje: 12.05, categoria: 'Baja', color: '#c0392b' }
+];
+
+// Función para crear todos los gráficos de influencia
+function crearGraficosInfluencia() {
+    crearGraficoBarras();
+    crearGraficoPastel();
+    crearHistograma();
+    crearPoligonoFrecuencias();
+}
+
+// 1. GRÁFICO DE BARRAS
+function crearGraficoBarras() {
+    const datosOrdenados = [...datosInfluencia].sort((a, b) => b.porcentaje - a.porcentaje);
+    
+    const trace = {
+        x: datosOrdenados.map(d => d.variable),
+        y: datosOrdenados.map(d => d.porcentaje),
+        type: 'bar',
+        marker: {
+            color: datosOrdenados.map(d => d.color),
+            line: {
+                color: 'rgba(0,0,0,0.3)',
+                width: 1
+            }
+        },
+        text: datosOrdenados.map(d => d.porcentaje + '%'),
+        textposition: 'auto',
+        hovertemplate: '<b>%{x}</b><br>Influencia: %{y}%<extra></extra>'
+    };
+
+    const layout = {
+        title: 'Influencia por Variable',
+        xaxis: {
+            title: 'Variables',
+            tickangle: -45
+        },
+        yaxis: {
+            title: 'Porcentaje de Influencia (%)',
+            range: [0, 70]
+        },
+        height: 400,
+        margin: { t: 50, b: 100, l: 60, r: 30 }
+    };
+
+    Plotly.newPlot('barChartInfluencia', [trace], layout);
+}
+
+// 2. GRÁFICO DE PASTEL
+function crearGraficoPastel() {
+    const trace = {
+        values: datosInfluencia.map(d => d.porcentaje),
+        labels: datosInfluencia.map(d => d.variable),
+        type: 'pie',
+        hole: 0.3,
+        marker: {
+            colors: datosInfluencia.map(d => d.color)
+        },
+        textinfo: 'label+percent',
+        hovertemplate: '<b>%{label}</b><br>Influencia: %{value}%<br>Porcentaje: %{percent}<extra></extra>',
+        pull: [0.1, 0, 0, 0, 0, 0, 0, 0] // Destacar la variable más importante
+    };
+
+    const layout = {
+        title: 'Distribución de Influencia',
+        height: 400,
+        showlegend: true,
+        legend: {
+            orientation: 'v',
+            x: 1.05,
+            y: 0.5
+        }
+    };
+
+    Plotly.newPlot('pieChartInfluencia', [trace], layout);
+}
+
+// 3. HISTOGRAMA
+function crearHistograma() {
+    // Crear bins para el histograma
+    const porcentajes = datosInfluencia.map(d => d.porcentaje);
+    
+    const trace = {
+        x: porcentajes,
+        type: 'histogram',
+        nbinsx: 6,
+        marker: {
+            color: 'rgba(52, 152, 219, 0.7)',
+            line: {
+                color: 'rgba(41, 128, 185, 1)',
+                width: 1.5
+            }
+        },
+        opacity: 0.7,
+        name: 'Frecuencia de Influencias',
+        hovertemplate: 'Rango: %{x}%<br>Frecuencia: %{y} variables<extra></extra>'
+    };
+
+    const layout = {
+        title: 'Distribución de Frecuencias de Influencia',
+        xaxis: {
+            title: 'Rango de Influencia (%)',
+            range: [0, 70]
+        },
+        yaxis: {
+            title: 'Número de Variables'
+        },
+        bargap: 0.1,
+        height: 400
+    };
+
+    Plotly.newPlot('histogramaInfluencia', [trace], layout);
+}
+
+// 4. POLÍGONO DE FRECUENCIAS
+function crearPoligonoFrecuencias() {
+    const datosOrdenados = [...datosInfluencia].sort((a, b) => a.porcentaje - b.porcentaje);
+    
+    const traceLinea = {
+        x: datosOrdenados.map((d, i) => i + 1),
+        y: datosOrdenados.map(d => d.porcentaje),
+        mode: 'lines+markers',
+        type: 'scatter',
+        name: 'Línea de Tendencia',
+        line: {
+            color: '#e74c3c',
+            width: 3,
+            shape: 'spline'
+        },
+        marker: {
+            color: datosOrdenados.map(d => d.color),
+            size: 8,
+            symbol: 'circle'
+        },
+        hovertemplate: '<b>%{text}</b><br>Posición: %{x}<br>Influencia: %{y}%<extra></extra>',
+        text: datosOrdenados.map(d => d.variable)
+    };
+
+    // Agregar área bajo la curva
+    const traceArea = {
+        x: datosOrdenados.map((d, i) => i + 1),
+        y: datosOrdenados.map(d => d.porcentaje),
+        mode: 'none',
+        type: 'scatter',
+        fill: 'tozeroy',
+        fillcolor: 'rgba(231, 76, 60, 0.2)',
+        name: 'Área de Influencia',
+        showlegend: false
+    };
+
+    const layout = {
+        title: 'Polígono de Frecuencias - Tendencia de Influencia',
+        xaxis: {
+            title: 'Variables (Ordenadas por Influencia)',
+            tickvals: datosOrdenados.map((d, i) => i + 1),
+            ticktext: datosOrdenados.map(d => d.variable.substring(0, 3) + '...'),
+            tickangle: -45
+        },
+        yaxis: {
+            title: 'Porcentaje de Influencia (%)',
+            range: [0, 70]
+        },
+        height: 400,
+        margin: { t: 50, b: 100, l: 60, r: 30 },
+        showlegend: true
+    };
+
+    Plotly.newPlot('poligonoInfluencia', [traceLinea, traceArea], layout);
 }
 
 // Llamar la función cuando se cargue la página
 document.addEventListener('DOMContentLoaded', function() {
-    // ... tus otras funciones ...
-    setTimeout(animarBarrasProgreso, 1000);
+    // ... tus otras funciones existentes ...
+    crearGraficosInfluencia();
 });
-    
-    // Fila informativa
-    html += `
-            <tr>
-                <td colspan="7" style="background: #f8f9fa; color: #7f8c8d; text-align: center;">
-                    ... y 66 filas adicionales (72 meses en total) ...
-                </td>
-            </tr>
-        </tbody>
-    `;
-    
-    tabla.innerHTML = html;
-
-}
-
 

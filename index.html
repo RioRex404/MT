@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelado Matemático IRA - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="glass-card">
+            <div class="header">
+                <h1>🔬 MODELADO MATEMÁTICO AVANZADO</h1>
+                <p>Análisis de correlación entre variables climáticas y enfermedades respiratorias en Perú (2020-2025)</p>
+            </div>
+
+            <!-- MÉTRICAS PRINCIPALES -->
+            <div class="metrics-grid">
+                <div class="metric-card high">
+                    <div class="metric-value">65.9%</div>
+                    <div class="metric-label">COEFICIENTE DE DETERMINACIÓN (R²)</div>
+                    <div class="metric-subtitle">Humedad Relativa</div>
+                </div>
+                <div class="metric-card medium">
+                    <div class="metric-value">0.812</div>
+                    <div class="metric-label">COEFICIENTE DE CORRELACIÓN (r)</div>
+                    <div class="metric-subtitle">Humedad Relativa</div>
+                </div>
+                <div class="metric-card info">
+                    <div class="metric-value">72</div>
+                    <div class="metric-label">MESES ANALIZADOS</div>
+                    <div class="metric-subtitle">Período 2020-2025</div>
+                </div>
+                <div class="metric-card low">
+                    <div class="metric-value">5</div>
+                    <div class="metric-label">VARIABLES DE ESTUDIO</div>
+                    <div class="metric-subtitle">Clima + Epidemiológicas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRÁFICOS PRINCIPALES -->
+        <div class="glass-card">
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">📊 DISTRIBUCIÓN DEL PODER PREDICTIVO (R²)</div>
+                    <div id="pieChart"></div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">📈 FUERZA DE CORRELACIÓN (r)</div>
+                    <div id="barChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SISTEMA DE ALERTAS -->
+        <div class="alert-system">
+            <div class="alert-title">🚨 SISTEMA DE ALERTAS TEMPRANAS</div>
+            <div class="alert-item">
+                <strong>🔴 ALERTA ALTA:</strong> Humedad relativa > 75% - Alto riesgo de incremento en casos IRA (R² = 65.9%)
+            </div>
+            <div class="alert-item">
+                <strong>🟡 ALERTA MEDIA:</strong> Temperatura mínima < 14°C - Vigilar tendencia de casos (R² = 12.1%)
+            </div>
+            <div class="alert-item">
+                <strong>🟢 SITUACIÓN ESTABLE:</strong> Precipitación dentro de rangos normales - Riesgo bajo (R² = 18.9%)
+            </div>
+        </div>
+
+        <!-- VARIABLES DEL ESTUDIO -->
+        <div class="glass-card">
+            <h2 class="section-title">🔍 VARIABLES DEL ESTUDIO</h2>
+            <table class="variables-table">
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Descripción</th>
+                        <th>Unidad</th>
+                        <th>Fuente</th>
+                        <th>Rango</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Y</strong></td>
+                        <td>Casos reportados de IRA/Neumonía</td>
+                        <td>casos/mes</td>
+                        <td>MINSA</td>
+                        <td>100 - 650</td>
+                        <td><span class="badge success">Dependiente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>X₁</strong></td>
+                        <td>Temperatura Mínima Mensual</td>
+                        <td>°C</td>
+                        <td>SENAMHI</td>
+                        <td>12.6 - 16.3</td>
+                        <td><span class="badge info">Independiente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>X₂</strong></td>
+                        <td>Precipitación Mensual Acumulada</td>
+                        <td>mm</td>
+                        <td>SENAMHI</td>
+                        <td>5 - 95</td>
+                        <td><span class="badge info">Independiente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>X₃</strong></td>
+                        <td>Humedad Relativa Promedio</td>
+                        <td>%</td>
+                        <td>SENAMHI</td>
+                        <td>71.0 - 77.5</td>
+                        <td><span class="badge info">Independiente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>X₄</strong></td>
+                        <td>Temperatura Máxima Mensual</td>
+                        <td>°C</td>
+                        <td>SENAMHI</td>
+                        <td>22.5 - 27.4</td>
+                        <td><span class="badge info">Independiente</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MODELOS MATEMÁTICOS -->
+        <div class="glass-card">
+            <h2 class="section-title">🧮 MODELOS DE REGRESIÓN LINEAL</h2>
+
+            <!-- Los modelos se generarán con JavaScript -->
+            <div id="modelos-container"></div>
+        </div>
+
+        <!-- DATOS COMPLETOS -->
+        <div class="glass-card">
+            <h2 class="section-title">📋 MUESTRA DE DATOS COMPLETOS (2020-2025)</h2>
+            <div class="data-table-container">
+                <table class="data-table" id="tabla-datos">
+                    <!-- La tabla se generará con JavaScript -->
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Dashboard Generado para el Trabajo Final de Matemática Discreta • Universidad USIL • 2025</p>
+            <p>Fuentes: MINSA, SENAMHI, DIRESAs • Período de estudio: Enero 2020 - Diciembre 2025</p>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -73,7 +73,7 @@ const datosMuestra = [
     { año: 2025, mes: 'Dic', casos: 330, tempMin: 15.8, precip: 70, humedad: 75.5, tempMax: 26.9 }
 ];
 
-// FUNCIÓN PRINCIPAL - Inicializar todo cuando se cargue la página
+// ========== FUNCIÓN PRINCIPAL ==========
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Inicializando dashboard...');
     
@@ -86,8 +86,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Generar tabla de datos
     generarTablaDatos();
     
-    // Crear gráficos de influencia (NUEVOS GRÁFICOS)
+    // Crear gráficos de influencia
     crearGraficosInfluencia();
+    
+    // Animar barras de progreso
+    setTimeout(animarBarrasProgreso, 1000);
     
     console.log('✅ Dashboard inicializado correctamente');
 });
@@ -133,7 +136,7 @@ function crearGraficosPrincipales() {
     });
 }
 
-// ========== NUEVOS GRÁFICOS DE INFLUENCIA ==========
+// ========== GRÁFICOS DE INFLUENCIA ==========
 function crearGraficosInfluencia() {
     console.log('📈 Creando gráficos de influencia...');
     crearGraficoBarrasInfluencia();
@@ -299,7 +302,7 @@ function crearPoligonoFrecuenciasInfluencia() {
     Plotly.newPlot('poligonoInfluencia', [traceLinea, traceArea], layout);
 }
 
-// ========== FUNCIONES EXISTENTES ==========
+// ========== MODELOS MATEMÁTICOS ==========
 function generarModelos() {
     const container = document.getElementById('modelos-container');
     
@@ -402,6 +405,7 @@ function crearGraficoModelo(modelo) {
     });
 }
 
+// ========== TABLA DE DATOS ==========
 function generarTablaDatos() {
     const tabla = document.getElementById('tabla-datos');
     
@@ -445,3 +449,61 @@ function generarTablaDatos() {
     
     tabla.innerHTML = html;
 }
+
+// ========== ANIMACIÓN DE BARRAS DE PROGRESO ==========
+function animarBarrasProgreso() {
+    const barras = document.querySelectorAll('.barra-progreso-fill');
+    barras.forEach(barra => {
+        const width = barra.style.width;
+        barra.style.width = '0%';
+        setTimeout(() => {
+            barra.style.width = width;
+            barra.style.transition = 'width 1.5s ease-in-out';
+        }, 100);
+    });
+}
+
+// ========== FUNCIONES DE UTILIDAD ==========
+function descargarDatos() {
+    console.log('📥 Descargando datos...');
+    // Aquí puedes agregar funcionalidad para descargar datos
+    alert('Función de descarga habilitada - Los datos estarán disponibles pronto');
+}
+
+function exportarReporte() {
+    console.log('📄 Exportando reporte...');
+    // Aquí puedes agregar funcionalidad para exportar reportes
+    alert('Función de exportación habilitada - El reporte estará disponible pronto');
+}
+
+// ========== EVENT LISTENERS ADICIONALES ==========
+window.addEventListener('resize', function() {
+    // Re-dibujar gráficos en redimensionamiento para mantener responsividad
+    Plotly.Plots.resize('pieChart');
+    Plotly.Plots.resize('barChart');
+    Plotly.Plots.resize('barChartInfluencia');
+    Plotly.Plots.resize('pieChartInfluencia');
+    Plotly.Plots.resize('histogramaInfluencia');
+    Plotly.Plots.resize('poligonoInfluencia');
+});
+
+// Manejo de errores global
+window.addEventListener('error', function(e) {
+    console.error('❌ Error en el dashboard:', e.error);
+});
+
+// Función para recargar gráficos si es necesario
+function recargarGraficos() {
+    console.log('🔄 Recargando gráficos...');
+    crearGraficosPrincipales();
+    crearGraficosInfluencia();
+}
+
+// Exportar funciones para uso global (si es necesario)
+window.dashboard = {
+    recargarGraficos,
+    descargarDatos,
+    exportarReporte,
+    modelos,
+    datosInfluencia
+};

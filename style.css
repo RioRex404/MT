@@ -459,14 +459,58 @@ body {
     transform: scale(1.02);
 }
 
-/* Estilo especial para la variable objetivo */
-.variables-table tr:last-child {
-    border: 2px solid #27ae60 !important;
+/* Mejoras para la sección de gráficos múltiples */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
 }
 
-.variables-table tr:last-child td {
-    font-weight: 700;
-    color: #1e7e34;
-    background: linear-gradient(135deg, #e8f5e8, #d4edda);
+@media (max-width: 1200px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
 }
+
+.chart-container {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    height: 500px;
+    transition: transform 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.chart-title {
+    color: var(--primary);
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--light);
+    padding-bottom: 10px;
+}
+
+/* Animaciones para los gráficos */
+.plot-container {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 

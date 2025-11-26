@@ -365,4 +365,49 @@ body {
 .badge.success { background: var(--success); color: white; }
 .badge.warning { background: var(--warning); color: white; }
 .badge.danger { background: var(--danger); color: white; }
+
 .badge.info { background: var(--accent); color: white; }
+/* Estilos para la tabla de porcentajes */
+.variables-table tr[style*="background: #e8f5e8"] {
+    border: 2px solid var(--success);
+}
+
+.variables-table tr[style*="background: #e8f5e8"] td {
+    font-weight: 700;
+    color: var(--success);
+}
+
+.impacto-alto { color: var(--success); font-weight: 600; }
+.impacto-medio { color: var(--warning); font-weight: 600; }
+.impacto-bajo { color: var(--danger); font-weight: 600; }
+
+/* Barras de progreso para visualizar porcentajes */
+.barra-progreso {
+    background: #ecf0f1;
+    border-radius: 10px;
+    height: 20px;
+    margin: 5px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.barra-progreso-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.barra-progreso.alto .barra-progreso-fill { background: var(--success); }
+.barra-progreso.medio .barra-progreso-fill { background: var(--warning); }
+.barra-progreso.bajo .barra-progreso-fill { background: var(--danger); }
+
+.barra-progreso-texto {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
